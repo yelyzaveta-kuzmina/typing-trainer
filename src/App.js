@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const text = "Here is something to type";
+
+class App extends React.Component {
+  state = { activeCharachterIndex: 0, time: 0 };
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({ time: this.state.time + 1 });
+    }, 1000);
+  }
+
+  onCheck = event => {
+    if (event.key === text[this.state.activeCharachterIndex]) {
+      this.setState({
+        activeCharachterIndex: this.state.activeCharachterIndex + 1
+      });
+    }
+
+    if (this.state.activeCharachterIndex === text.length) {
+      alert("Nice");
+    }
+  };
+
+  render() {
+    const { activeCharachterIndex } = this.state;
+    const { time } = this.state;
+
+    return (
+      <div>
+        <div>{time}</div>
+        <span>{text.slice(0, activeCharachterIndex)}</span>
+        <span className="slicedLetter">{text[activeCharachterIndex]}</span>
+        <span>{text.slice(activeCharachterIndex + 1)}</span>
+        <div>
+          <input onKeyDown={this.onCheck} />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
