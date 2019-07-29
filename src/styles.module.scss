@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  font-size: 20px;
+}
+
+.errorsNumber {
+  color: red;
+}
+
+.sentence {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  font-size: 30px;
+  white-space: pre;
+}
+
+.inputWrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+
+  .input {
+    outline: none;
+    font-size: 25px;
+    width: 50%;
+  }
+}
+
+.letter {
+  &.active {
+    color: green;
+    text-decoration: underline;
+  }
+
+  &.error {
+    color: red;
+  }
+}
