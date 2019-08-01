@@ -2,6 +2,10 @@ body {
   margin: 0;
 }
 
+.wrapper {
+  display: block;
+}
+
 .timer {
   display: flex;
   justify-content: center;
@@ -14,8 +18,8 @@ body {
 }
 
 .sentence {
-  display: flex;
-  justify-content: center;
+  display: block;
+  text-align: center;
   margin-top: 40px;
   font-size: 30px;
   white-space: pre;
@@ -24,12 +28,26 @@ body {
 .inputWrapper {
   display: flex;
   justify-content: center;
-  margin-top: 50px;
+  margin-top: 55px;
 
   .input {
     outline: none;
     font-size: 25px;
-    width: 50%;
+    width: 500px;
+    height: 35px;
+    border: 0;
+    border-bottom: 2px solid #555;
+    padding: 10px 20px;
+
+    &.error {
+      border-color: red;
+    }
+
+    &::placeholder {
+      display: block;
+      text-align: center;
+      font-size: 20px;
+    }
   }
 }
 
@@ -42,4 +60,9 @@ body {
   &.error {
     color: red;
   }
+}
+
+.arrow {
+  font-size: 15px;
+  margin-left: 10px;
 }

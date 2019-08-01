@@ -1,30 +1,65 @@
 import React from 'react';
+import Submarine from './components/submarine';
 import classNames from 'classnames';
+import TEXTS from './texts';
+import ConfirmationDialog from './components/confirmation-dialog';
 import { KeyCode } from './constants';
 import styles from './styles.module.scss';
 
-const text = 'Here is something to type';
-
 class App extends React.Component {
-  state = { activeCharachterIndex: 0, time: 0, countErrors: 0, errorsIndices: [] };
+  timerId = null;
+  state = {
+    textNumber: 0,
+    activeCharachterIndex: 0,
+    time: 0,
+    countErrors: 0,
+    isConfirmationDialogVisible: false,
+    errorsIndices: []
+  };
 
   componentDidMount() {
-    setInterval(() => {
-      this.setState({ time: this.state.time + 1 });
-    }, 1000);
+    window.addEventListener('keypress', (event) => {
+      console.log(event.ctrlKey, event.keyCode);
+    });
   }
 
-  onCheck = (event) => {
-    const keyCode = event.which || event.keyCode;
+  onTimerStart = () => {
+    this.timerId = setInterval(() => {
+      this.setState({ time: this.state.time + 1 });
+    }, 1000);
+  };
 
-    if (event.key === text[this.state.activeCharachterIndex]) {
+  onTimerStop = () => {
+    clearInterval(this.timerId);
+    this.timerId = null;
+  };
+
+  onCheck = (event) => {
+    const text = TEXTS[this.state.textNumber];
+    const keyCode = event.which || event.keyCode;
+    const activeChar = text[this.state.activeCharachterIndex];
+
+    if (!this.timerId) {
+      this.onTimerStart();
+    }
+
+    if (event.key === activeChar || (keyCode === KeyCode.ENTER && activeChar === '\n')) {
       this.setState({
         showErrorHighlight: false,
         activeCharachterIndex: this.state.activeCharachterIndex + 1
       });
 
-      if (keyCode === KeyCode.SPACE) {
+      if (keyCode === KeyCode.ENTER) {
         event.nativeEvent.target.value = '';
+      }
+
+      if (this.state.activeCharachterIndex + 1 === text.length) {
+        this.onTimerStop();
+        this.setState({
+          isConfirmationDialogVisible: true,
+          textNumber: this.state.textNumber + 1,
+          activeCharachterIndex: 0
+        });
       }
 
       return;
@@ -40,27 +75,37 @@ class App extends React.Component {
       countErrors: this.state.countErrors + 1,
       errorsIndices: [...this.state.errorsIndices, this.state.activeCharachterIndex]
     });
-
-    if (this.state.activeCharachterIndex === text.length) {
-      return null;
-    }
   };
 
   render() {
-    const { activeCharachterIndex, errorsIndices } = this.state;
-    const { countErrors } = this.state;
-    const minutes = Math.floor(this.state.time / 60);
-    const seconds = Math.floor(this.state.time % 60);
+    const {
+      time,
+      textNumber,
+      activeCharachterIndex,
+      errorsIndices,
+      countErrors,
+      isConfirmationDialogVisible
+    } = this.state;
+
+    const text = TEXTS[textNumber];
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+
+    const progress = (activeCharachterIndex / text.length) * 100;
+    const speed = (activeCharachterIndex / time) * 60;
 
     return (
       <div className={styles.wrapper}>
+        {isConfirmationDialogVisible && <ConfirmationDialog />}
         <div className={styles.timer}>
           Time:&nbsp;
           {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
           &nbsp;&nbsp;&nbsp;
           <span className={styles.errors}>Errors:&nbsp;</span>
           <span className={styles.errorsNumber}> {countErrors}</span>
+          &nbsp;&nbsp;&nbsp; Speed:&nbsp;{Math.round(speed)}
         </div>
+
         <div className={styles.sentence}>
           {Array.from(text, (letter, index) => (
             <span
@@ -69,13 +114,21 @@ class App extends React.Component {
                 [styles.active]: activeCharachterIndex === index,
                 [styles.error]: errorsIndices.includes(index)
               })}>
+              {letter === '\n' && <span className={styles.arrow}>↩</span>}
               {letter}
             </span>
           ))}
         </div>
         <div className={styles.inputWrapper}>
-          <input className={styles.input} onKeyDown={this.onCheck} />
+          <input
+            autoFocus
+            className={classNames(styles.input, {
+              [styles.error]: errorsIndices.includes(activeCharachterIndex)
+            })}
+            onKeyDown={this.onCheck}
+          />
         </div>
+        <Submarine position={progress} />
       </div>
     );
   }

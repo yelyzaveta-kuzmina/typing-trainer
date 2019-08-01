@@ -1,0 +1,35 @@
+.submarineWrapper {
+  margin-top: 60px;
+  align-content: flex-start;
+  display: block;
+  background-image: url('./images/water.gif');
+  background-color: #5fe2fa;
+  background-size: 100% 100px;
+  background-repeat-y: no-repeat;
+  height: 500px;
+  padding-right: 120px;
+
+  .submarineTrack {
+    position: relative;
+  }
+
+  img {
+    width: 120px;
+    position: absolute;
+    top: -15px;
+    transition: left 2s;
+    animation: bouncing 2s infinite;
+  }
+}
+
+@keyframes bouncing {
+  0% {
+    top: -20px;
+  }
+  50% {
+    top: 0px;
+  }
+  100% {
+    top: -20px;
+  }
+}
