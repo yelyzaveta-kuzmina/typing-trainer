@@ -1,4 +1,5 @@
 .submarineWrapper {
+  flex: 1;
   margin-top: 60px;
   align-content: flex-start;
   display: block;
@@ -6,7 +7,6 @@
   background-color: #5fe2fa;
   background-size: 100% 100px;
   background-repeat-y: no-repeat;
-  height: 500px;
   padding-right: 120px;
 
   .submarineTrack {

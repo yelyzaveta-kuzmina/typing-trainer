@@ -1,9 +1,12 @@
 body {
   margin: 0;
+  user-select: none;
 }
 
 .wrapper {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .timer {

@@ -2,26 +2,41 @@ import React from 'react';
 import Submarine from './components/submarine';
 import classNames from 'classnames';
 import TEXTS from './texts';
-import ConfirmationDialog from './components/confirmation-dialog';
+import Modal from './components/modal-window';
+import ResultsTable from './components/results-table';
 import { KeyCode } from './constants';
 import styles from './styles.module.scss';
+import { formatTime } from './helpers/format-time';
+import { onFormatSpeed } from './helpers/format-speed';
+import { addResult, getResults, removeResults } from './helpers/local-storage';
+
+const INITIAL_STATE = {
+  textNumber: 0,
+  activeCharachterIndex: 100,
+  time: 0,
+  countErrors: 0,
+  isModalVisible: false,
+  errorsIndices: [],
+  results: getResults()
+};
 
 class App extends React.Component {
   timerId = null;
-  state = {
-    textNumber: 0,
-    activeCharachterIndex: 0,
-    time: 0,
-    countErrors: 0,
-    isConfirmationDialogVisible: false,
-    errorsIndices: []
+  inputRef = React.createRef();
+  state = INITIAL_STATE;
+
+  getSpeed = () => onFormatSpeed(this.state.activeCharachterIndex, this.state.time);
+
+  onFetchResults = () => {
+    this.setState({
+      results: getResults()
+    });
   };
 
-  componentDidMount() {
-    window.addEventListener('keypress', (event) => {
-      console.log(event.ctrlKey, event.keyCode);
-    });
-  }
+  onResultsClear = () => {
+    this.setState({ results: [] });
+    removeResults();
+  };
 
   onTimerStart = () => {
     this.timerId = setInterval(() => {
@@ -34,6 +49,39 @@ class App extends React.Component {
     this.timerId = null;
   };
 
+  onModalOpen = () => {
+    this.setState({
+      isModalVisible: true
+    });
+  };
+
+  onModalClose = () => {
+    this.setState({
+      isModalVisible: false
+    });
+  };
+
+  onGameContinue = () => {
+    this.onCleanInput();
+    this.onModalClose();
+    this.setState(
+      {
+        ...INITIAL_STATE,
+        textNumber: this.state.textNumber + 1,
+        results: getResults()
+      },
+      this.onFocusTextInput
+    );
+  };
+
+  onCleanInput = () => {
+    this.inputRef.current.value = '';
+  };
+
+  onFocusTextInput() {
+    this.inputRef.current.focus();
+  }
+
   onCheck = (event) => {
     const text = TEXTS[this.state.textNumber];
     const keyCode = event.which || event.keyCode;
@@ -44,22 +92,28 @@ class App extends React.Component {
     }
 
     if (event.key === activeChar || (keyCode === KeyCode.ENTER && activeChar === '\n')) {
-      this.setState({
-        showErrorHighlight: false,
-        activeCharachterIndex: this.state.activeCharachterIndex + 1
-      });
+      this.setState(
+        {
+          showErrorHighlight: false,
+          activeCharachterIndex: this.state.activeCharachterIndex + 1
+        },
+        () => {
+          if (this.state.activeCharachterIndex === text.length) {
+            this.onTimerStop();
+            this.onModalOpen();
+            addResult({
+              speed: this.getSpeed(),
+              time: formatTime(this.state.time),
+              errors: this.state.countErrors
+            });
+            this.onFetchResults();
+            this.onCleanInput();
+          }
+        }
+      );
 
       if (keyCode === KeyCode.ENTER) {
-        event.nativeEvent.target.value = '';
-      }
-
-      if (this.state.activeCharachterIndex + 1 === text.length) {
-        this.onTimerStop();
-        this.setState({
-          isConfirmationDialogVisible: true,
-          textNumber: this.state.textNumber + 1,
-          activeCharachterIndex: 0
-        });
+        this.onCleanInput();
       }
 
       return;
@@ -84,26 +138,27 @@ class App extends React.Component {
       activeCharachterIndex,
       errorsIndices,
       countErrors,
-      isConfirmationDialogVisible
+      results,
+      isModalVisible
     } = this.state;
 
     const text = TEXTS[textNumber];
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-
     const progress = (activeCharachterIndex / text.length) * 100;
-    const speed = (activeCharachterIndex / time) * 60;
 
     return (
       <div className={styles.wrapper}>
-        {isConfirmationDialogVisible && <ConfirmationDialog />}
+        <ResultsTable results={results.slice(-3)} onResultsClear={this.onResultsClear} />
+        {isModalVisible && (
+          <Modal onGameContinue={this.onGameContinue} onModalClose={this.onModalClose} />
+        )}
         <div className={styles.timer}>
           Time:&nbsp;
-          {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}
+          {formatTime(time)}
           &nbsp;&nbsp;&nbsp;
           <span className={styles.errors}>Errors:&nbsp;</span>
           <span className={styles.errorsNumber}> {countErrors}</span>
-          &nbsp;&nbsp;&nbsp; Speed:&nbsp;{Math.round(speed)}
+          &nbsp;&nbsp;&nbsp; Speed:&nbsp;
+          {this.getSpeed()}
         </div>
 
         <div className={styles.sentence}>
@@ -121,11 +176,11 @@ class App extends React.Component {
         </div>
         <div className={styles.inputWrapper}>
           <input
-            autoFocus
+            ref={this.inputRef}
             className={classNames(styles.input, {
               [styles.error]: errorsIndices.includes(activeCharachterIndex)
             })}
-            onKeyDown={this.onCheck}
+            onKeyPress={this.onCheck}
           />
         </div>
         <Submarine position={progress} />

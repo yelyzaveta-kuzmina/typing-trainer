@@ -1,0 +1,26 @@
+.results {
+  position: relative;
+  width: 100px;
+}
+
+.table {
+  display: table;
+  position: fixed;
+
+  .tableHeader {
+    font-size: 12px;
+  }
+
+  .tableContent {
+    font-size: 11px;
+    text-align: center;
+  }
+}
+
+.clearStorageButton {
+  position: absolute;
+  top: 5px;
+  right: -30px;
+  width: 20px;
+  cursor: pointer;
+}
