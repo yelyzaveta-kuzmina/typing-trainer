@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  margin-top: 3px;
   user-select: none;
 }
 
@@ -9,10 +10,25 @@ body {
   height: 100vh;
 }
 
+.restartButton {
+  font-size: 15px;
+  align-self: flex-end;
+  position: fixed;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  transform: rotate(0);
+  transition: transform 1s;
+
+  &:focus {
+    transition: none;
+    transform: rotate(-360deg);
+  }
+}
+
 .timer {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
   font-size: 20px;
 }
 

@@ -1,18 +1,19 @@
 import React from 'react';
-import Submarine from './components/submarine';
 import classNames from 'classnames';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TEXTS from './texts';
+import Submarine from './components/submarine';
 import Modal from './components/modal-window';
 import ResultsTable from './components/results-table';
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import { KeyCode } from './constants';
-import styles from './styles.module.scss';
-import { formatTime } from './helpers/format-time';
-import { onFormatSpeed } from './helpers/format-speed';
+import { formatSpeed, formatTime } from './helpers/formating';
 import { addResult, getResults, removeResults } from './helpers/local-storage';
+import styles from './styles.module.scss';
 
 const INITIAL_STATE = {
   textNumber: 0,
-  activeCharachterIndex: 100,
+  activeCharachterIndex: 0,
   time: 0,
   countErrors: 0,
   isModalVisible: false,
@@ -25,7 +26,7 @@ class App extends React.Component {
   inputRef = React.createRef();
   state = INITIAL_STATE;
 
-  getSpeed = () => onFormatSpeed(this.state.activeCharachterIndex, this.state.time);
+  getSpeed = () => formatSpeed(this.state.activeCharachterIndex, this.state.time);
 
   onFetchResults = () => {
     this.setState({
@@ -59,6 +60,17 @@ class App extends React.Component {
     this.setState({
       isModalVisible: false
     });
+  };
+
+  onGameRestart = () => {
+    this.onCleanInput();
+    this.setState(
+      {
+        ...INITIAL_STATE
+      },
+      this.onTimerStop(),
+      this.onFocusTextInput()
+    );
   };
 
   onGameContinue = () => {
@@ -148,8 +160,15 @@ class App extends React.Component {
     return (
       <div className={styles.wrapper}>
         <ResultsTable results={results.slice(-3)} onResultsClear={this.onResultsClear} />
+        <button onClick={this.onGameRestart} className={styles.restartButton}>
+          <FontAwesomeIcon icon={faRedoAlt} />
+        </button>
         {isModalVisible && (
-          <Modal onGameContinue={this.onGameContinue} onModalClose={this.onModalClose} />
+          <Modal
+            onGameRestart={this.onGameRestart}
+            onGameContinue={this.onGameContinue}
+            onModalClose={this.onModalClose}
+          />
         )}
         <div className={styles.timer}>
           Time:&nbsp;
@@ -176,6 +195,7 @@ class App extends React.Component {
         </div>
         <div className={styles.inputWrapper}>
           <input
+            autoFocus
             ref={this.inputRef}
             className={classNames(styles.input, {
               [styles.error]: errorsIndices.includes(activeCharachterIndex)

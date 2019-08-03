@@ -37,7 +37,10 @@ const Modal = (props) => {
               ref={noButtonRef}
               tabIndex="2"
               className={styles.noButton}
-              onClick={props.onModalClose}>
+              onClick={(event) => {
+                props.onModalClose();
+                props.onGameRestart();
+              }}>
               No
             </button>
           </div>
