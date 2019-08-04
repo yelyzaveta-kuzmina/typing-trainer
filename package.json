@@ -10,6 +10,7 @@
     "lodash": "^4.17.15",
     "lodash.sample": "^4.2.1",
     "react": "^16.8.6",
+    "react-burger-menu": "^2.6.10",
     "react-dom": "^16.8.6",
     "react-draggable": "^3.3.0",
     "react-scripts": "3.0.1",

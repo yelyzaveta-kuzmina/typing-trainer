@@ -5,13 +5,15 @@ import TEXTS from './texts';
 import Submarine from './components/submarine';
 import Modal from './components/modal-window';
 import ResultsTable from './components/results-table';
-import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import BurgerMenu from './components/burger-menu';
 import { KeyCode } from './constants';
 import { formatSpeed, formatTime } from './helpers/formating';
 import { addResult, getResults, removeResults } from './helpers/local-storage';
+import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './styles.module.scss';
 
 const INITIAL_STATE = {
+  poemNumber: 0,
   textNumber: 0,
   activeCharachterIndex: 0,
   time: 0,
@@ -94,8 +96,12 @@ class App extends React.Component {
     this.inputRef.current.focus();
   }
 
+  onPoemChange = (poemNumber) => {
+    this.setState({ poemNumber, textNumber: 0 });
+  };
+
   onCheck = (event) => {
-    const text = TEXTS[this.state.textNumber];
+    const text = Object.values(TEXTS)[this.state.poemNumber][this.state.textNumber];
     const keyCode = event.which || event.keyCode;
     const activeChar = text[this.state.activeCharachterIndex];
 
@@ -146,6 +152,7 @@ class App extends React.Component {
   render() {
     const {
       time,
+      poemNumber,
       textNumber,
       activeCharachterIndex,
       errorsIndices,
@@ -154,57 +161,62 @@ class App extends React.Component {
       isModalVisible
     } = this.state;
 
-    const text = TEXTS[textNumber];
+    const text = Object.values(TEXTS)[poemNumber][textNumber];
+    const poemName = Object.keys(TEXTS)[poemNumber];
     const progress = (activeCharachterIndex / text.length) * 100;
 
     return (
-      <div className={styles.wrapper}>
-        <ResultsTable results={results.slice(-3)} onResultsClear={this.onResultsClear} />
-        <button onClick={this.onGameRestart} className={styles.restartButton}>
-          <FontAwesomeIcon icon={faRedoAlt} />
-        </button>
-        {isModalVisible && (
-          <Modal
-            onGameRestart={this.onGameRestart}
-            onGameContinue={this.onGameContinue}
-            onModalClose={this.onModalClose}
-          />
-        )}
-        <div className={styles.timer}>
-          Time:&nbsp;
-          {formatTime(time)}
-          &nbsp;&nbsp;&nbsp;
-          <span className={styles.errors}>Errors:&nbsp;</span>
-          <span className={styles.errorsNumber}> {countErrors}</span>
-          &nbsp;&nbsp;&nbsp; Speed:&nbsp;
-          {this.getSpeed()}
-        </div>
+      <>
+        <BurgerMenu onPoemChange={this.onPoemChange} />
+        <div className={styles.wrapper}>
+          <ResultsTable results={results.slice(-3)} onResultsClear={this.onResultsClear} />
+          <button onClick={this.onGameRestart} className={styles.restartButton}>
+            <FontAwesomeIcon icon={faRedoAlt} />
+          </button>
+          {isModalVisible && (
+            <Modal
+              onGameRestart={this.onGameRestart}
+              onGameContinue={this.onGameContinue}
+              onModalClose={this.onModalClose}
+            />
+          )}
+          <div className={styles.timer}>
+            Time:&nbsp;
+            {formatTime(time)}
+            &nbsp;&nbsp;&nbsp;
+            <span className={styles.errors}>Errors:&nbsp;</span>
+            <span className={styles.errorsNumber}>{countErrors}</span>
+            &nbsp;&nbsp;&nbsp; Speed:&nbsp;
+            {this.getSpeed()}
+          </div>
 
-        <div className={styles.sentence}>
-          {Array.from(text, (letter, index) => (
-            <span
-              key={index}
-              className={classNames(styles.letter, {
-                [styles.active]: activeCharachterIndex === index,
-                [styles.error]: errorsIndices.includes(index)
-              })}>
-              {letter === '\n' && <span className={styles.arrow}>↩</span>}
-              {letter}
-            </span>
-          ))}
+          <div className={styles.sentence}>
+            <div className={styles.poemName}>{poemName}</div>
+            {Array.from(text, (letter, index) => (
+              <span
+                key={index}
+                className={classNames(styles.letter, {
+                  [styles.active]: activeCharachterIndex === index,
+                  [styles.error]: errorsIndices.includes(index)
+                })}>
+                {letter === '\n' && <span className={styles.arrow}>↩</span>}
+                {letter}
+              </span>
+            ))}
+          </div>
+          <div className={styles.inputWrapper}>
+            <input
+              autoFocus
+              ref={this.inputRef}
+              className={classNames(styles.input, {
+                [styles.error]: errorsIndices.includes(activeCharachterIndex)
+              })}
+              onKeyPress={this.onCheck}
+            />
+          </div>
+          <Submarine position={progress} />
         </div>
-        <div className={styles.inputWrapper}>
-          <input
-            autoFocus
-            ref={this.inputRef}
-            className={classNames(styles.input, {
-              [styles.error]: errorsIndices.includes(activeCharachterIndex)
-            })}
-            onKeyPress={this.onCheck}
-          />
-        </div>
-        <Submarine position={progress} />
-      </div>
+      </>
     );
   }
 }
