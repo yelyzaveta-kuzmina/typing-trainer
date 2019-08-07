@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/typing-trainer/static/css/main.24047d79.chunk.css",
+    "main.js": "/typing-trainer/static/js/main.bfb3c526.chunk.js",
+    "main.js.map": "/typing-trainer/static/js/main.bfb3c526.chunk.js.map",
+    "runtime~main.js": "/typing-trainer/static/js/runtime~main.57030ce5.js",
+    "runtime~main.js.map": "/typing-trainer/static/js/runtime~main.57030ce5.js.map",
+    "static/js/2.3c2a96b6.chunk.js": "/typing-trainer/static/js/2.3c2a96b6.chunk.js",
+    "static/js/2.3c2a96b6.chunk.js.map": "/typing-trainer/static/js/2.3c2a96b6.chunk.js.map",
+    "index.html": "/typing-trainer/index.html",
+    "precache-manifest.13d78a4c6119663cac6e4b60ffaf6a5c.js": "/typing-trainer/precache-manifest.13d78a4c6119663cac6e4b60ffaf6a5c.js",
+    "service-worker.js": "/typing-trainer/service-worker.js",
+    "static/css/main.24047d79.chunk.css.map": "/typing-trainer/static/css/main.24047d79.chunk.css.map",
+    "static/media/mop.svg": "/typing-trainer/static/media/mop.93a36e31.svg",
+    "static/media/styles.module.scss": "/typing-trainer/static/media/water.524e3a4d.gif"
+  }
+}
