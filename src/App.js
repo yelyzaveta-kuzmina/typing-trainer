@@ -68,19 +68,21 @@ class App extends React.Component {
     this.onCleanInput();
     this.setState(
       {
-        ...INITIAL_STATE
+        ...INITIAL_STATE,
+        poemNumber: this.state.poemNumber,
+        textNumber: this.state.textNumber,
+        results: getResults()
       },
-      this.onTimerStop(),
-      this.onFocusTextInput()
+      this.onFocusTextInput
     );
   };
 
   onGameContinue = () => {
     this.onCleanInput();
-    this.onModalClose();
     this.setState(
       {
         ...INITIAL_STATE,
+        poemNumber: this.state.poemNumber,
         textNumber: this.state.textNumber + 1,
         results: getResults()
       },
@@ -97,7 +99,15 @@ class App extends React.Component {
   }
 
   onPoemChange = (poemNumber) => {
-    this.setState({ poemNumber, textNumber: 0 });
+    this.onCleanInput();
+    this.onTimerStop();
+    this.setState({
+      ...INITIAL_STATE,
+      poemNumber,
+      textNumber: 0,
+      time: 0,
+      results: getResults()
+    });
   };
 
   onCheck = (event) => {
