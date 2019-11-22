@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/typing-trainer/static/css/main.24047d79.chunk.css",
-    "main.js": "/typing-trainer/static/js/main.6f30d314.chunk.js",
-    "main.js.map": "/typing-trainer/static/js/main.6f30d314.chunk.js.map",
+    "main.css": "/typing-trainer/static/css/main.6113a3ad.chunk.css",
+    "main.js": "/typing-trainer/static/js/main.77355b0c.chunk.js",
+    "main.js.map": "/typing-trainer/static/js/main.77355b0c.chunk.js.map",
     "runtime~main.js": "/typing-trainer/static/js/runtime~main.57030ce5.js",
     "runtime~main.js.map": "/typing-trainer/static/js/runtime~main.57030ce5.js.map",
     "static/js/2.3c2a96b6.chunk.js": "/typing-trainer/static/js/2.3c2a96b6.chunk.js",
     "static/js/2.3c2a96b6.chunk.js.map": "/typing-trainer/static/js/2.3c2a96b6.chunk.js.map",
     "index.html": "/typing-trainer/index.html",
-    "precache-manifest.2df934799bfde2ce33822fc92e0817c0.js": "/typing-trainer/precache-manifest.2df934799bfde2ce33822fc92e0817c0.js",
+    "precache-manifest.b84199024b9951621a1520368c8ca269.js": "/typing-trainer/precache-manifest.b84199024b9951621a1520368c8ca269.js",
     "service-worker.js": "/typing-trainer/service-worker.js",
-    "static/css/main.24047d79.chunk.css.map": "/typing-trainer/static/css/main.24047d79.chunk.css.map",
+    "static/css/main.6113a3ad.chunk.css.map": "/typing-trainer/static/css/main.6113a3ad.chunk.css.map",
     "static/media/mop.svg": "/typing-trainer/static/media/mop.93a36e31.svg",
     "static/media/styles.module.scss": "/typing-trainer/static/media/water.524e3a4d.gif"
   }
