@@ -200,16 +200,21 @@ class App extends React.Component {
             {this.getSpeed()}
           </div>
 
-          <div className={styles.sentence}>
-            <div className={styles.poemName}>{poemName}</div>
+          <div className={styles.poemName}>{poemName}</div>
+          <div test-handle={'text'} className={styles.sentence}>
             {Array.from(text, (letter, index) => (
               <span
                 key={index}
+                // test-handle={activeCharachterIndex === index ? 'active-letter' : undefined}
                 className={classNames(styles.letter, {
                   [styles.active]: activeCharachterIndex === index,
                   [styles.error]: errorsIndices.includes(index)
                 })}>
-                {letter === '\n' && <span className={styles.arrow}>↩</span>}
+                {letter === '\n' && (
+                  <span test-handle={'arrow'} className={styles.arrow}>
+                    ↩
+                  </span>
+                )}
                 {letter}
               </span>
             ))}

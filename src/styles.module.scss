@@ -40,14 +40,16 @@ body {
 .sentence {
   display: block;
   text-align: center;
-  margin-top: 40px;
+  margin-top: 30px;
   font-size: 30px;
   white-space: pre;
 }
 
 .poemName {
+  display: flex;
+  justify-content: center;
   font-size: 15px;
-  margin-bottom: 15px;
+  margin-top: 20px;
 }
 
 .inputWrapper {
