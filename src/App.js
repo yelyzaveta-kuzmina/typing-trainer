@@ -91,7 +91,9 @@ class App extends React.Component {
   };
 
   onCleanInput = () => {
-    this.inputRef.current.value = '';
+    setTimeout(() => {
+      this.inputRef.current.value = '';
+    }, 0);
   };
 
   onFocusTextInput() {
@@ -112,6 +114,7 @@ class App extends React.Component {
 
   onCheck = (event) => {
     const text = Object.values(TEXTS)[this.state.poemNumber][this.state.textNumber];
+    const poemFullContent = Object.values(TEXTS)[this.state.poemNumber];
     const keyCode = event.which || event.keyCode;
     const activeChar = text[this.state.activeCharachterIndex];
 
@@ -126,9 +129,11 @@ class App extends React.Component {
           activeCharachterIndex: this.state.activeCharachterIndex + 1
         },
         () => {
-          if (this.state.activeCharachterIndex === text.length) {
+          if (this.state.activeCharachterIndex >= text.length) {
             this.onTimerStop();
-            this.onModalOpen();
+            if (this.state.textNumber + 1 !== poemFullContent.length) {
+              this.onModalOpen();
+            }
             addResult({
               speed: this.getSpeed(),
               time: formatTime(this.state.time),
@@ -174,7 +179,6 @@ class App extends React.Component {
     const text = Object.values(TEXTS)[poemNumber][textNumber];
     const poemName = Object.keys(TEXTS)[poemNumber];
     const progress = (activeCharachterIndex / text.length) * 100;
-
     return (
       <>
         <BurgerMenu onPoemChange={this.onPoemChange} />
@@ -205,14 +209,13 @@ class App extends React.Component {
             {Array.from(text, (letter, index) => (
               <span
                 key={index}
-                // test-handle={activeCharachterIndex === index ? 'active-letter' : undefined}
                 className={classNames(styles.letter, {
                   [styles.active]: activeCharachterIndex === index,
                   [styles.error]: errorsIndices.includes(index)
                 })}>
                 {letter === '\n' && (
                   <span test-handle={'arrow'} className={styles.arrow}>
-                    ↩
+                    {'↩'}
                   </span>
                 )}
                 {letter}
