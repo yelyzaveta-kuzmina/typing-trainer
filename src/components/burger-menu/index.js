@@ -1,5 +1,5 @@
 import React from 'react';
-import TEXTS from '../../texts';
+import TEXTS from '../../data/texts';
 import { slide as Menu } from 'react-burger-menu';
 import './styles.module.scss';
 

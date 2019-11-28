@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import Draggable from 'react-draggable';
 import styles from './styles.module.scss';
-import { KeyCode } from '../../constants';
+import { KeyCode } from '../../utils/constants';
 
 const Modal = (props) => {
   const yesButtonRef = useRef();

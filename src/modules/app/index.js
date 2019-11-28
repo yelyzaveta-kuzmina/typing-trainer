@@ -1,27 +1,17 @@
 import React from 'react';
+import { INITIAL_STATE } from '../../initial-state';
+import { addResult, getResults, removeResults } from '../../utils/local-storage';
+import { formatSpeed, formatTime } from '../../utils/formating';
+import { KeyCode } from '../../utils/constants';
+import TEXTS from '../../data/texts';
+import BurgerMenu from '../../components/burger-menu';
+import RestartButton from '../../components/restart-button';
+import ResultsTable from '../../components/results-table';
+import LiveResultContainer from '../../components/live-results-container';
+import Modal from '../../components/modal-window';
+import Submarine from '../../components/submarine';
 import classNames from 'classnames';
-import RestartButton from './components/restart-button';
-import TEXTS from './texts';
-import Submarine from './components/submarine';
-import Modal from './components/modal-window';
-import ResultsTable from './components/results-table';
-import LiveResultContainer from './components/live-results-container';
-import BurgerMenu from './components/burger-menu';
-import { KeyCode } from './constants';
-import { formatSpeed, formatTime } from './helpers/formating';
-import { addResult, getResults, removeResults } from './helpers/local-storage';
 import styles from './styles.module.scss';
-
-const INITIAL_STATE = {
-  poemNumber: 0,
-  textNumber: 0,
-  activeCharachterIndex: 0,
-  time: 0,
-  countErrors: 0,
-  isModalVisible: false,
-  errorsIndices: [],
-  results: getResults()
-};
 
 class App extends React.Component {
   timerId = null;
@@ -228,6 +218,7 @@ class App extends React.Component {
             <input
               autoFocus
               ref={this.inputRef}
+              placeholder={'insert text here'}
               className={classNames(styles.input, {
                 [styles.error]: errorsIndices.includes(activeCharachterIndex)
               })}

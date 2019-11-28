@@ -9,24 +9,6 @@ body {
   height: 100vh;
 }
 
-// .restartButton {
-//   font-size: 15px;
-//   align-self: flex-end;
-//   right: 20px;
-//   top: 1px;
-//   position: fixed;
-//   cursor: pointer;
-//   border: 0;
-//   outline: none;
-//   transform: rotate(0);
-//   transition: transform 1s;
-
-//   &:focus {
-//     transition: none;
-//     transform: rotate(-360deg);
-//   }
-// }
-
 .resultsLive {
   display: flex;
   justify-content: center;
@@ -67,6 +49,7 @@ body {
   .input {
     outline: none;
     font-size: 25px;
+    font-family: inherit;
     width: 500px;
     height: 35px;
     border: 0;
@@ -78,9 +61,10 @@ body {
     }
 
     &::placeholder {
-      display: block;
+      font-variant: small-caps;
+      letter-spacing: 1px;
       text-align: center;
-      font-size: 20px;
+      font-size: 18px;
     }
   }
 }
