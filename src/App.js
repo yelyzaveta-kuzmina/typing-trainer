@@ -184,7 +184,10 @@ class App extends React.Component {
         <BurgerMenu onPoemChange={this.onPoemChange} />
         <div className={styles.wrapper}>
           <ResultsTable results={results.slice(-3)} onResultsClear={this.onResultsClear} />
-          <button onClick={this.onGameRestart} className={styles.restartButton}>
+          <button
+            test-handle={'restart-button'}
+            onClick={this.onGameRestart}
+            className={styles.restartButton}>
             <FontAwesomeIcon icon={faRedoAlt} />
           </button>
           {isModalVisible && (
@@ -204,10 +207,13 @@ class App extends React.Component {
             {this.getSpeed()}
           </div>
 
-          <div className={styles.poemName}>{poemName}</div>
+          <div test-handle={'poem-name'} className={styles.poemName}>
+            {poemName}
+          </div>
           <div test-handle={'text'} className={styles.sentence}>
             {Array.from(text, (letter, index) => (
               <span
+                test-handle={activeCharachterIndex === index ? 'active-letter' : null}
                 key={index}
                 className={classNames(styles.letter, {
                   [styles.active]: activeCharachterIndex === index,
