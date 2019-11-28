@@ -1,0 +1,17 @@
+.restartButton {
+  font-size: 15px;
+  align-self: flex-end;
+  right: 20px;
+  top: 1px;
+  position: fixed;
+  cursor: pointer;
+  border: 0;
+  outline: none;
+  transform: rotate(0);
+  transition: transform 1s;
+
+  &:focus {
+    transition: none;
+    transform: rotate(-360deg);
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import RestartButton from './components/restart-button';
 import TEXTS from './texts';
 import Submarine from './components/submarine';
 import Modal from './components/modal-window';
@@ -10,7 +10,6 @@ import BurgerMenu from './components/burger-menu';
 import { KeyCode } from './constants';
 import { formatSpeed, formatTime } from './helpers/formating';
 import { addResult, getResults, removeResults } from './helpers/local-storage';
-import { faRedoAlt } from '@fortawesome/free-solid-svg-icons';
 import styles from './styles.module.scss';
 
 const INITIAL_STATE = {
@@ -186,12 +185,7 @@ class App extends React.Component {
         <BurgerMenu onPoemChange={this.onPoemChange} />
         <div className={styles.wrapper}>
           <ResultsTable results={results.slice(-3)} onResultsClear={this.onResultsClear} />
-          <button
-            test-handle={'restart-button'}
-            onClick={this.onGameRestart}
-            className={styles.restartButton}>
-            <FontAwesomeIcon icon={faRedoAlt} />
-          </button>
+          <RestartButton onClick={this.onGameRestart} />
           {isModalVisible && (
             <Modal
               onGameRestart={this.onGameRestart}
@@ -209,7 +203,6 @@ class App extends React.Component {
               name={'Speed'}
               content={this.getSpeed() === Infinity ? '0' : this.getSpeed()}></LiveResultContainer>
           </div>
-
           <div test-handle={'poem-name'} className={styles.poemName}>
             {poemName}
           </div>
