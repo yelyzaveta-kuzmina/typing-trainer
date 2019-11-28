@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0ae91e538d64f325b9a38434a91b99f6",
+    "revision": "8b1bc1b26f05b546cb3022598ca6099c",
     "url": "/typing-trainer/index.html"
   },
   {
-    "revision": "0517b92289317c2e9fe9",
-    "url": "/typing-trainer/static/css/main.36c14ebd.chunk.css"
+    "revision": "3d27586e3a8ea35bd19b",
+    "url": "/typing-trainer/static/css/main.f86a1dc4.chunk.css"
   },
   {
-    "revision": "f85be7531fa004991813",
-    "url": "/typing-trainer/static/js/2.3c2a96b6.chunk.js"
+    "revision": "371d545d165b1e6d2a17",
+    "url": "/typing-trainer/static/js/2.c03be6f8.chunk.js"
   },
   {
-    "revision": "0517b92289317c2e9fe9",
-    "url": "/typing-trainer/static/js/main.5b68885f.chunk.js"
+    "revision": "3d27586e3a8ea35bd19b",
+    "url": "/typing-trainer/static/js/main.e296c3a4.chunk.js"
   },
   {
     "revision": "42bff806f6f5e34fc469",
