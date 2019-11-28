@@ -65,6 +65,7 @@ class App extends React.Component {
   };
 
   onGameRestart = () => {
+    this.onTimerStop();
     this.onCleanInput();
     this.setState(
       {
