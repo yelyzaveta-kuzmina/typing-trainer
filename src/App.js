@@ -5,6 +5,7 @@ import TEXTS from './texts';
 import Submarine from './components/submarine';
 import Modal from './components/modal-window';
 import ResultsTable from './components/results-table';
+import LiveResultContainer from './components/live-results-container';
 import BurgerMenu from './components/burger-menu';
 import { KeyCode } from './constants';
 import { formatSpeed, formatTime } from './helpers/formating';
@@ -198,14 +199,15 @@ class App extends React.Component {
               onModalClose={this.onModalClose}
             />
           )}
-          <div className={styles.timer}>
-            Time:&nbsp;
-            {formatTime(time)}
-            &nbsp;&nbsp;&nbsp;
-            <span className={styles.errors}>Errors:&nbsp;</span>
-            <span className={styles.errorsNumber}>{countErrors}</span>
-            &nbsp;&nbsp;&nbsp; Speed:&nbsp;
-            {this.getSpeed()}
+          <div className={styles.resultsLive}>
+            <LiveResultContainer name={'Timer'} content={formatTime(time)}></LiveResultContainer>
+            <LiveResultContainer
+              className={styles.errorsNumber}
+              name={'Errors'}
+              content={countErrors}></LiveResultContainer>
+            <LiveResultContainer
+              name={'Speed'}
+              content={this.getSpeed() === Infinity ? '0' : this.getSpeed()}></LiveResultContainer>
           </div>
 
           <div test-handle={'poem-name'} className={styles.poemName}>
