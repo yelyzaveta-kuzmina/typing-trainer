@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1b73416cd8fa02a332250159746cd1ae",
+    "revision": "a87f728850540bc74d1f2294fbbe65fd",
     "url": "/typing-trainer/index.html"
   },
   {
