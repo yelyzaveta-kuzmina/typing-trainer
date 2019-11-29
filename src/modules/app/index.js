@@ -183,15 +183,20 @@ class App extends React.Component {
               onModalClose={this.onModalClose}
             />
           )}
-          <div className={styles.resultsLive}>
-            <LiveResultContainer name={'Timer'} content={formatTime(time)}></LiveResultContainer>
+          <div test-handle={'results-live'} className={styles.resultsLive}>
+            <LiveResultContainer
+              name={'Timer'}
+              content={formatTime(time)}
+              testHandle={'timer'}></LiveResultContainer>
             <LiveResultContainer
               className={styles.errorsNumber}
               name={'Errors'}
-              content={countErrors}></LiveResultContainer>
+              content={countErrors}
+              testHandle={'errors'}></LiveResultContainer>
             <LiveResultContainer
               name={'Speed'}
-              content={this.getSpeed() === Infinity ? '0' : this.getSpeed()}></LiveResultContainer>
+              content={this.getSpeed() === Infinity ? '0' : this.getSpeed()}
+              testHandle={'speed'}></LiveResultContainer>
           </div>
           <div test-handle={'poem-name'} className={styles.poemName}>
             {poemName}
@@ -217,6 +222,7 @@ class App extends React.Component {
           <div className={styles.inputWrapper}>
             <input
               autoFocus
+              test-handle={'input'}
               ref={this.inputRef}
               placeholder={'insert text here'}
               className={classNames(styles.input, {

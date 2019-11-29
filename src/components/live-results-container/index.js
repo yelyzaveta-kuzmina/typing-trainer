@@ -1,9 +1,10 @@
 import React from 'react';
 
-const LiveResultsContainer = ({ className, name, content }) => {
+const LiveResultsContainer = ({ className, name, content, testHandle }) => {
   return (
-    <span>
-      {name}:&nbsp;<span className={className}>{content}</span>
+    <span test-handle={testHandle}>
+      {name}:&nbsp;
+      <span className={className}>{content}</span>
     </span>
   );
 };
