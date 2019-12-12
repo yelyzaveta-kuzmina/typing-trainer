@@ -5,7 +5,12 @@ Once a paragraph is completed, results (the last 3 paragraphs) will be displayed
 
 The faster you type, the faster the submarine uses special engines that make the universe move around it instead.
 
+<p align="center">
+   <img src="typing-trainer.jpg" alt="screenshot"></img>
+</p>
+
 Demo is [here](https://yelyzaveta-kuzmina.github.io/typing-trainer/).
+
 ###### Technologies:
   - JavaScript
   - React
