@@ -9,6 +9,7 @@
   outline: none;
   transform: rotate(0);
   transition: transform 1s;
+  background-color: transparent;
 
   &:focus {
     transition: none;
